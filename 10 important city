@@ -50,7 +50,7 @@ for lo , la , city in zip(longitudes , latitudes , cities):
     x , y = m(lo , la)
     xl.append(x)
     yl.append(y)
-    for city in cities:
+    if city in cities:
         if city=='Karaj':
             plt.text(x,y + 0/1 ,city, fontsize = 8 , ha='right' , va='bottom')
         else:
