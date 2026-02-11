@@ -46,10 +46,15 @@ longitudes = [te_lo,mas_lo,esf_lo,shi_lo,tab_lo,ahv_lo,kar_lo,ras_lo,ban_lo,yaz_
 latitudes = [te_la,mas_la,esf_la,shi_la,tab_la,ahv_la,kar_la,ras_la,ban_la,yaz_la]
 
 xl , yl =[] , []
-for lo , la in zip(longitudes , latitudes):
+for lo , la , city in zip(longitudes , latitudes , cities):
     x , y = m(lo , la)
     xl.append(x)
     yl.append(y)
+    for city in cities:
+        if city=='Karaj':
+            plt.text(x,y + 0/1 ,city, fontsize = 8 , ha='right' , va='bottom')
+        else:
+            plt.text(x,y + 0/1 ,city, fontsize = 8 , ha='center' , va='top')
 
 scale = np.array(populations)*3
 colors = np.array(colors)
