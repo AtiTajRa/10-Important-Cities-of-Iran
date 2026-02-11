@@ -1,0 +1,65 @@
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+fig=plt.figure()
+ax=fig.add_axes([0.1,0.1,0.8,0.8])
+
+m = Basemap(llcrnrlon=44.,llcrnrlat=25.,urcrnrlon=63.3,urcrnrlat=39.8,\
+            rsphere=(6378137.00,6356752.3142),\
+            resolution='l',projection='merc',\
+            lat_0=40.,lon_0=-20.,lat_ts=20.)
+m.fillcontinents(color='white',lake_color='lightblue')
+
+def lon_lot(deg , min , sec ):
+    return deg + min/60 + sec/3600
+te_lo = lon_lot(51,23,23)
+te_la = lon_lot(35,41,20)
+mas_lo = lon_lot(59,32,36)
+mas_la = lon_lot(36,19,35)
+esf_lo = lon_lot(51,40,3)
+esf_la = lon_lot(32,38,41)
+shi_lo = lon_lot(52,31,30)
+shi_la = lon_lot(29,36,52)
+tab_lo = lon_lot(46,17,46)
+tab_la = lon_lot(38,4,26)
+ahv_lo = lon_lot(48,41,3)
+ahv_la = lon_lot(31,19,8)
+kar_lo = lon_lot(50,59,30)
+kar_la = lon_lot(35,49,58)
+ras_lo = lon_lot(49,35,19)
+ras_la = lon_lot(37,16,34)
+ban_lo = lon_lot(56,16,51)
+ban_la = lon_lot(27,11,11)
+yaz_lo = lon_lot(54,22,3)
+yaz_la = lon_lot(31,53,50)
+
+cities = ["Tehran","Mashhad","Esfahan","Shiraz","Tabriz","Ahvaz","Karaj","Rasht","Bandar-Abbas","Yazd"]
+
+colors = ["blue" , "purple" , "black" , "red" , "yellow" , "orange" , "pink" , "green" , "brown" , "gray"]
+
+populations = [903.9 , 300.1 , 217.4 , 156.5 , 158.4 , 130.2 , 159.2 , 67.99 , 52.6 , 52.9]
+
+longitudes = [te_lo,mas_lo,esf_lo,shi_lo,tab_lo,ahv_lo,kar_lo,ras_lo,ban_lo,yaz_lo]
+
+latitudes = [te_la,mas_la,esf_la,shi_la,tab_la,ahv_la,kar_la,ras_la,ban_la,yaz_la]
+
+xl , yl =[] , []
+for lo , la in zip(longitudes , latitudes):
+    x , y = m(lo , la)
+    xl.append(x)
+    yl.append(y)
+
+scale = np.array(populations)*3
+colors = np.array(colors)
+cities = np.array(cities)
+
+m.scatter(xl , yl , c=colors , s=scale , alpha = 0.5)
+plt.legend()
+m.drawcoastlines(color='black',linewidth=1)
+m.drawmapboundary(fill_color='white')
+m.drawstates()
+m.drawcountries()
+ax.set_title('10 Cities of Iran')
+plt.show()
